@@ -10,13 +10,13 @@ class App extends Component {
     books: [],
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     BooksAPI.getAll().then((books) => {
       this.setState({ books });
     });
   }
 
-  moveBookShelf(book, shelf) {
+  moveBookShelf = (book, shelf) => {
     BooksAPI.update(book, shelf).then(() => {
       const updatedBook = { ...book, shelf };
       this.setState(state => ({
@@ -29,6 +29,7 @@ class App extends Component {
     return (
       <div>
         <Route
+          exact
           path='/'
           render={() => (
             <BooksList
@@ -37,7 +38,14 @@ class App extends Component {
             />
           )}
         />
-        <Route path='/search' component={BookSearch} />
+        <Route
+          path='/search'
+          render={() => (
+            <BookSearch
+              onMoveBook={(book, shelf) => (this.moveBookShelf(book, shelf))}
+            />
+          )}
+        />
       </div>
     );
   }

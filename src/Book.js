@@ -13,13 +13,16 @@ const Book = (props) => {
   const handleMoveBook = (e) => {
     props.onMoveBook(props.book, e.target.value);
   };
+
   const {
     title, authors, imageLinks, shelf,
   } = props.book;
+
   const bookCover = {
     ...style.bookCover,
-    backgroundImage: `url(${imageLinks.smallThumbnail})`,
+    backgroundImage: `url(${imageLinks ? imageLinks.smallThumbnail : ''})`,
   };
+
   return (
     <div className='book'>
       <div className='book-top'>
@@ -41,7 +44,9 @@ const Book = (props) => {
         </div>
       </div>
       <div className='book-title'>{title}</div>
-      <div className='book-authors'>{authors.join(', ')}</div>
+      {authors &&
+        <div className='book-authors'>{authors.join(', ')}</div>
+      }
     </div>
   );
 };

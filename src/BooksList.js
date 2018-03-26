@@ -6,8 +6,10 @@ import BookShelf from './BookShelf';
 
 const BooksList = (props) => {
   const booksWantToRead = props.books.filter(book => book.shelf === SHELFS.WANT_TO_READ);
+
   const booksCurrentyReading = props.books.filter(book =>
     book.shelf === SHELFS.CURRENTLY_READING);
+
   const booksRead = props.books.filter(book => book.shelf === SHELFS.READ);
 
   return (
