@@ -20,14 +20,17 @@ const BooksList = (props) => {
           <BookShelf
             title='Currently Reading'
             books={booksCurrentyReading}
+            onMoveBook={props.onMoveBook}
           />
           <BookShelf
             title='Want to Read'
             books={booksWantToRead}
+            onMoveBook={props.onMoveBook}
           />
           <BookShelf
             title='Read'
             books={booksRead}
+            onMoveBook={props.onMoveBook}
           />
         </div>
       </div>
@@ -40,6 +43,7 @@ const BooksList = (props) => {
 
 BooksList.propTypes = {
   books: PropTypes.array.isRequired,
+  onMoveBook: PropTypes.func.isRequired,
 };
 
 export default BooksList;

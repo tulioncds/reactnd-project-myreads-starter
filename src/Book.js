@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { SHELFS } from './utils/Constants';
 
 const style = {
   bookCover: {
@@ -9,7 +10,12 @@ const style = {
 };
 
 const Book = (props) => {
-  const { title, authors, imageLinks } = props.book;
+  const handleMoveBook = (e) => {
+    props.onMoveBook(props.book, e.target.value);
+  };
+  const {
+    title, authors, imageLinks, shelf,
+  } = props.book;
   const bookCover = {
     ...style.bookCover,
     backgroundImage: `url(${imageLinks.smallThumbnail})`,
@@ -19,11 +25,17 @@ const Book = (props) => {
       <div className='book-top'>
         <div className='book-cover' style={bookCover} />
         <div className='book-shelf-changer'>
-          <select>
-            <option value='none' disabled>Move to...</option>
-            <option value='currentlyReading'>Currently Reading</option>
-            <option value='wantToRead'>Want to Read</option>
-            <option value='read'>Read</option>
+          <select onChange={handleMoveBook}>
+            <option value='none' readOnly>Move to...</option>
+            {shelf !== SHELFS.CURRENTLY_READING &&
+              <option value={SHELFS.CURRENTLY_READING}>Currently Reading</option>
+            }
+            {shelf !== SHELFS.WANT_TO_READ &&
+              <option value={SHELFS.WANT_TO_READ}>Want to Read</option>
+            }
+            {shelf !== SHELFS.READ &&
+              <option value={SHELFS.READ}>Read</option>
+            }
             <option value='none'>None</option>
           </select>
         </div>
@@ -55,6 +67,7 @@ Book.propTypes = {
     shelf: PropTypes.string,
     title: PropTypes.string,
   }).isRequired,
+  onMoveBook: PropTypes.func.isRequired,
 };
 
 export default Book;
