@@ -36,8 +36,12 @@ const Book = (props) => {
             <option value={SHELFS.WANT_TO_READ} selected={shelf === SHELFS.WANT_TO_READ}>
               Want to Read
             </option>
-            <option value={SHELFS.READ} selected={shelf === SHELFS.READ}>Read</option>
-            <option value='none' selected={!shelf}>None</option>
+            <option value={SHELFS.READ} selected={shelf === SHELFS.READ}>
+              Read
+            </option>
+            <option value='none' selected={!shelf}>
+              None
+            </option>
           </select>
         </div>
       </div>
