@@ -15,7 +15,8 @@ class App extends Component {
   componentDidMount = () => {
     this.setState({ loading: true });
     BooksAPI.getAll().then((books) => {
-      const reduceBooks = books.reduce((result, book) => {
+      const reduceBooks = books.reduce((res, book) => {
+        const result = res;
         result[book.id] = book;
         return result;
       }, {});
