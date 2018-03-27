@@ -6,6 +6,7 @@ import * as BooksAPI from './utils/BooksAPI';
 
 class BookSearch extends Component {
   static propTypes = {
+    existsBooks: PropTypes.object.isRequired,
     onMoveBook: PropTypes.func.isRequired,
   }
 
@@ -15,11 +16,17 @@ class BookSearch extends Component {
 
   bookSearch = (query) => {
     BooksAPI.search(query).then((res) => {
-      if (!res || Object.prototype.hasOwnProperty.call(res, 'error')) {
-        this.setState({ searchedBooks: [] });
-      } else {
-        this.setState({ searchedBooks: res });
+      let searchedBooks = [];
+      if (res && !Object.prototype.hasOwnProperty.call(res, 'error')) {
+        searchedBooks = res.map((b) => {
+          let book = b;
+          if (this.props.existsBooks[book.id]) {
+            book = this.props.existsBooks[book.id];
+          }
+          return book;
+        });
       }
+      this.setState({ searchedBooks });
     });
   }
 

@@ -5,12 +5,14 @@ import { SHELFS } from './utils/Constants';
 import BookShelf from './BookShelf';
 
 const BooksList = (props) => {
-  const booksWantToRead = props.books.filter(book => book.shelf === SHELFS.WANT_TO_READ);
+  const booksWantToRead = Object.values(props.books)
+    .filter(book => book.shelf === SHELFS.WANT_TO_READ);
 
-  const booksCurrentyReading = props.books.filter(book =>
-    book.shelf === SHELFS.CURRENTLY_READING);
+  const booksCurrentyReading = Object.values(props.books)
+    .filter(book => book.shelf === SHELFS.CURRENTLY_READING);
 
-  const booksRead = props.books.filter(book => book.shelf === SHELFS.READ);
+  const booksRead = Object.values(props.books)
+    .filter(book => book.shelf === SHELFS.READ);
 
   return (
     <div className='list-books'>
@@ -44,7 +46,7 @@ const BooksList = (props) => {
 };
 
 BooksList.propTypes = {
-  books: PropTypes.array.isRequired,
+  books: PropTypes.object.isRequired,
   onMoveBook: PropTypes.func.isRequired,
 };
 

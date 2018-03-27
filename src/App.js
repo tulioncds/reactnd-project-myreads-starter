@@ -7,21 +7,26 @@ import './App.css';
 
 class App extends Component {
   state = {
-    books: [],
+    books: {},
   }
 
   componentDidMount = () => {
     BooksAPI.getAll().then((books) => {
-      this.setState({ books });
+      const reduceBooks = books.reduce((result, book) => {
+        result[book.id] = book;
+        return result;
+      }, {});
+      this.setState({ books: reduceBooks });
     });
   }
 
   moveBookShelf = (book, shelf) => {
     BooksAPI.update(book, shelf).then(() => {
-      const updatedBook = { ...book, shelf };
-      this.setState(state => ({
-        books: state.books.filter(b => b.id !== book.id).concat(updatedBook),
-      }));
+      const books = { ...this.state.books };
+      books[book.id].shelf = shelf;
+      this.setState({
+        books,
+      });
     });
   }
 
@@ -35,6 +40,7 @@ class App extends Component {
             <BooksList
               onMoveBook={(book, shelf) => (this.moveBookShelf(book, shelf))}
               books={this.state.books}
+              shelfs={this.state.shelfs}
             />
           )}
         />
@@ -42,6 +48,7 @@ class App extends Component {
           path='/search'
           render={() => (
             <BookSearch
+              existsBooks={this.state.books}
               onMoveBook={(book, shelf) => (this.moveBookShelf(book, shelf))}
             />
           )}
