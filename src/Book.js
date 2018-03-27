@@ -30,16 +30,14 @@ const Book = (props) => {
         <div className='book-shelf-changer'>
           <select onChange={handleMoveBook}>
             <option value='none' readOnly>Move to...</option>
-            {shelf !== SHELFS.CURRENTLY_READING &&
-              <option value={SHELFS.CURRENTLY_READING}>Currently Reading</option>
-            }
-            {shelf !== SHELFS.WANT_TO_READ &&
-              <option value={SHELFS.WANT_TO_READ}>Want to Read</option>
-            }
-            {shelf !== SHELFS.READ &&
-              <option value={SHELFS.READ}>Read</option>
-            }
-            <option value='none'>None</option>
+            <option value={SHELFS.CURRENTLY_READING} selected={shelf === SHELFS.CURRENTLY_READING}>
+              Currently Reading
+            </option>
+            <option value={SHELFS.WANT_TO_READ} selected={shelf === SHELFS.WANT_TO_READ}>
+              Want to Read
+            </option>
+            <option value={SHELFS.READ} selected={shelf === SHELFS.READ}>Read</option>
+            <option value='none' selected={!shelf}>None</option>
           </select>
         </div>
       </div>
