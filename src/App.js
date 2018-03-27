@@ -23,7 +23,7 @@ class App extends Component {
   moveBookShelf = (book, shelf) => {
     BooksAPI.update(book, shelf).then(() => {
       const books = { ...this.state.books };
-      books[book.id].shelf = shelf;
+      books[book.id] = { ...book, shelf };
       this.setState({
         books,
       });

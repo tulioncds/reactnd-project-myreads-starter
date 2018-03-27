@@ -31,7 +31,9 @@ class BookSearch extends Component {
   }
 
   handleChangeQuery = (e) => {
-    this.bookSearch(e.target.value);
+    if (e.key === 'Enter') {
+      this.bookSearch(e.target.value);
+    }
   }
 
   render() {
@@ -40,7 +42,7 @@ class BookSearch extends Component {
         <div className='search-books-bar'>
           <Link className='close-search' to='/'>Close</Link>
           <div className='search-books-input-wrapper'>
-            <input type='text' placeholder='Search by title or author' onChange={this.handleChangeQuery} />
+            <input type='text' placeholder='Search by title or author' onKeyPress={this.handleChangeQuery} />
           </div>
         </div>
         <div className='search-books-results'>

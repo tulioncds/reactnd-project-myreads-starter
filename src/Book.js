@@ -28,8 +28,8 @@ const Book = (props) => {
       <div className='book-top'>
         <div className='book-cover' style={bookCover} />
         <div className='book-shelf-changer'>
-          <select onChange={handleMoveBook} value={shelf}>
-            <option value='none' readOnly>Move to...</option>
+          <select onChange={handleMoveBook} value={shelf ? shelf : 'none'}>
+            <option disabled>Move to...</option>
             <option value={SHELFS.CURRENTLY_READING}>Currently Reading</option>
             <option value={SHELFS.WANT_TO_READ}>Want to Read</option>
             <option value={SHELFS.READ}>Read</option>
