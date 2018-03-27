@@ -9,6 +9,7 @@ module.exports = {
         "quotes": ["error", "single"],
         "jsx-quotes": ["error", "prefer-single"],
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "jsx-a11y/href-no-hash": "off",
         "jsx-a11y/anchor-is-valid": ["error", {
             "components": ["Link"],
             "specialLink": ["hrefLeft", "hrefRight"],
