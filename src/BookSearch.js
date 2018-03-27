@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Loadble from 'react-loading-overlay';
 import BookShelf from './BookShelf';
 import * as BooksAPI from './utils/BooksAPI';
 
@@ -12,9 +13,11 @@ class BookSearch extends Component {
 
   state = {
     searchedBooks: [],
+    loading: false,
   }
 
   bookSearch = (query) => {
+    this.setState({ loading: true });
     BooksAPI.search(query).then((res) => {
       let searchedBooks = [];
       if (res && !Object.prototype.hasOwnProperty.call(res, 'error')) {
@@ -26,7 +29,7 @@ class BookSearch extends Component {
           return book;
         });
       }
-      this.setState({ searchedBooks });
+      this.setState({ searchedBooks, loading: false });
     });
   }
 
@@ -38,22 +41,28 @@ class BookSearch extends Component {
 
   render() {
     return (
-      <div className='search-books'>
-        <div className='search-books-bar'>
-          <Link className='close-search' to='/'>Close</Link>
-          <div className='search-books-input-wrapper'>
-            <input type='text' placeholder='Search by title or author' onKeyPress={this.handleChangeQuery} />
+      <Loadble
+        active={this.state.loading}
+        spinner
+        text='Loading...'
+      >
+        <div className='search-books'>
+          <div className='search-books-bar'>
+            <Link className='close-search' to='/'>Close</Link>
+            <div className='search-books-input-wrapper'>
+              <input type='text' placeholder='Search by title or author' onKeyPress={this.handleChangeQuery} />
+            </div>
+          </div>
+          <div className='search-books-results'>
+            <ol className='books-grid' />
+            <BookShelf
+              title='Searched Books'
+              books={this.state.searchedBooks}
+              onMoveBook={this.props.onMoveBook}
+            />
           </div>
         </div>
-        <div className='search-books-results'>
-          <ol className='books-grid' />
-          <BookShelf
-            title='Searched Books'
-            books={this.state.searchedBooks}
-            onMoveBook={this.props.onMoveBook}
-          />
-        </div>
-      </div>
+      </Loadble>
     );
   }
 }
